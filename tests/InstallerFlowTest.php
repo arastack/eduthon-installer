@@ -39,7 +39,7 @@ final class InstallerFlowTest extends TestCase
         $this->copyInstaller(dirname(__DIR__).'/installer', $this->installerDir);
 
         file_put_contents($this->installerDir.'/config.local.php', '<?php return '.var_export([
-            'engine_url' => 'https://engine.delwathon.com/api/',
+            'engine_url' => 'https://eduthon-console.delwathon.com/api/',
             'trusted_keys' => [$this->keys['public']],
         ], true).';');
 
@@ -325,7 +325,7 @@ final class InstallerFlowTest extends TestCase
                 'release' => [
                     'version' => $version, 'channel' => 'stable', 'notes' => 'Faster report cards.', 'size' => filesize($package),
                     'sha256' => hash_file('sha256', $package), 'signature' => $signature, 'signature_algorithm' => 'ed25519',
-                    'download_url' => 'https://engine.delwathon.com/api/releases/1/download?license=1&signature=abc',
+                    'download_url' => 'https://eduthon-console.delwathon.com/api/releases/1/download?license=1&signature=abc',
                 ],
             ])
             ->file('releases/1/download', file_get_contents($package))
@@ -344,7 +344,7 @@ final class InstallerFlowTest extends TestCase
             'config_version' => 1,
             'license' => ['purchase_code' => 'EDU-7KQ2-M9XD-P4TR-W3HZ', 'status' => 'active'],
             'school' => ['name' => 'Heritage College', 'hosting' => 'self_hosted'],
-            'servers' => ['backend_parent_url' => 'https://api.delwathon.com', 'frontend_parent_url' => 'https://eduthon.ng', 'engine_url' => 'https://engine.delwathon.com/api/'],
+            'servers' => ['backend_parent_url' => 'https://api.delwathon.com', 'frontend_parent_url' => 'https://eduthon.ng', 'engine_url' => 'https://eduthon-console.delwathon.com/api/'],
             'backend' => $backendReady
                 ? ['ready' => true, 'tenant' => '01jk8z3v5t6m9q2w4e7r1y0u3p', 'tenant_header' => 'X-Eduthon-Tenant', 'url' => 'https://api.delwathon.com/', 'api_url' => 'https://api.delwathon.com/api/', 'health_url' => 'https://api.delwathon.com/api/verify-install']
                 : ['ready' => false, 'tenant' => null, 'url' => null, 'api_url' => null, 'health_url' => null],

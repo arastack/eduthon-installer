@@ -4,9 +4,9 @@
 /**
  * Builds the distributable installer: dist/eduthon-installer-{version}.zip
  *
- *   EDUTHON_RELEASE_PUBLIC_KEYS=<base64>[,<base64>] php bin/build [--engine=https://engine.delwathon.com/api/]
+ *   EDUTHON_RELEASE_PUBLIC_KEYS=<base64>[,<base64>] php bin/build [--engine=https://eduthon-console.delwathon.com/api/]
  *
- * The public keys are the Ed25519 keys Delwathon Admin signs releases with
+ * The public keys are the Ed25519 keys Eduthon Console signs releases with
  * (Releases → Signing key). Builds without a valid key are refused.
  */
 
@@ -17,7 +17,7 @@ $options = getopt('', ['engine::', 'keys::', 'output::']);
 $keys = array_values(array_filter(array_map('trim', explode(',', (string) ($options['keys'] ?? getenv('EDUTHON_RELEASE_PUBLIC_KEYS') ?: '')))));
 
 if ($keys === []) {
-    fwrite(STDERR, "Set EDUTHON_RELEASE_PUBLIC_KEYS (or --keys=) to the release signing public key(s) from Delwathon Admin.\n");
+    fwrite(STDERR, "Set EDUTHON_RELEASE_PUBLIC_KEYS (or --keys=) to the release signing public key(s) from Eduthon Console.\n");
     exit(1);
 }
 
@@ -73,4 +73,4 @@ foreach ($files as $file) {
 $zip->close();
 
 printf("Built %s (%s bytes)\nsha256 %s\nTrusted keys: %d\n", $output, number_format(filesize($output)), hash_file('sha256', $output), count($keys));
-printf("Publish it from Delwathon Admin: php artisan releases:upload installer %s %s --publish\n", $version, $output);
+printf("Publish it from Eduthon Console: php artisan releases:upload installer %s %s --publish\n", $version, $output);

@@ -3,7 +3,7 @@
 namespace Eduthon\Installer\Engine;
 
 /**
- * Client for the Delwathon Admin installation API.
+ * Client for the Eduthon Console installation API.
  */
 final class EngineClient
 {

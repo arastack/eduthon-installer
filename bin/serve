@@ -75,7 +75,7 @@ if (! is_file($localConfig)) {
     $keys = array_values(array_filter(array_map('trim', explode(',', (string) getenv('EDUTHON_RELEASE_PUBLIC_KEYS')))));
 
     if ($keys === []) {
-        // Development only: ask the local Delwathon Admin for its release key.
+        // Development only: ask the local Eduthon Console for its release key.
         $response = @file_get_contents($engine.'releases/public-key');
         $key = json_decode((string) $response, true)['public_key'] ?? null;
         $keys = $key ? [$key] : [];
@@ -84,7 +84,7 @@ if (! is_file($localConfig)) {
     file_put_contents($localConfig, '<?php return '.var_export(['engine_url' => $engine, 'trusted_keys' => $keys], true).";\n");
 
     if ($keys === []) {
-        fwrite(STDERR, "Warning: no trusted release key. Start Delwathon Admin with ENGINE_SIGNING_KEY set, or pass EDUTHON_RELEASE_PUBLIC_KEYS, then run with --fresh.\n");
+        fwrite(STDERR, "Warning: no trusted release key. Start Eduthon Console with ENGINE_SIGNING_KEY set, or pass EDUTHON_RELEASE_PUBLIC_KEYS, then run with --fresh.\n");
     }
 }
 

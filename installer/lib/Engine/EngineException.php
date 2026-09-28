@@ -5,7 +5,7 @@ namespace Eduthon\Installer\Engine;
 use RuntimeException;
 
 /**
- * A failure talking to Delwathon Admin, with a message fit for the user.
+ * A failure talking to Eduthon Console, with a message fit for the user.
  */
 final class EngineException extends RuntimeException
 {
