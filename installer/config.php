@@ -17,7 +17,7 @@
 return [
 
     // Eduthon Console installation API. Must use HTTPS.
-    'engine_url' => 'https://eduthon-console.delwathon.com/api/',
+    'engine_url' => 'https://console.eduthon.ng/api/',
 
     // Ed25519 public keys (base64) trusted to sign release packages.
     // A package is rejected unless its signature matches one of these.

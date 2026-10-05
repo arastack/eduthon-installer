@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Eduthon Installer — https://delwathon.com
+ * Eduthon Installer — https://eduthon.ng
  *
  * Deploys the signed Eduthon school portal onto this server.
  */

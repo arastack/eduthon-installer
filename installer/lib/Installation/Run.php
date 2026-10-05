@@ -23,7 +23,7 @@ final class Run
     }
 
     /**
-     * @param  array<string, mixed>  $config  From Delwathon's installer/config endpoint.
+     * @param  array<string, mixed>  $config  From Eduthon's installer/config endpoint.
      * @param  array<string, mixed>  $release  From releases/latest.
      */
     public static function start(Store $store, string $mode, array $config, array $release, string $portalUrl, string $purchaseCode): self

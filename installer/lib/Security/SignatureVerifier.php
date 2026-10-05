@@ -3,9 +3,9 @@
 namespace Eduthon\Installer\Security;
 
 /**
- * Confirms a downloaded package is exactly the file Delwathon signed.
+ * Confirms a downloaded package is exactly the file Eduthon signed.
  *
- * Delwathon signs the package's SHA-256 digest (hex) with Ed25519. The
+ * Eduthon signs the package's SHA-256 digest (hex) with Ed25519. The
  * installer trusts only the public keys compiled into it; keys served by
  * the network are never trusted on their own.
  */
@@ -35,7 +35,7 @@ final class SignatureVerifier
         $keys = $this->decodedKeys();
 
         if ($keys === []) {
-            throw new VerificationException('This installer has no trusted signing keys, so it cannot verify packages. Download a fresh installer from Delwathon.');
+            throw new VerificationException('This installer has no trusted signing keys, so it cannot verify packages. Download a fresh installer from Eduthon.');
         }
 
         if (! is_file($file)) {
@@ -45,13 +45,13 @@ final class SignatureVerifier
         $size = filesize($file);
 
         if ($expectedSize !== null && $size !== $expectedSize) {
-            throw new VerificationException(sprintf('The package is %s bytes but Delwathon published %s bytes. The download was incomplete or altered.', number_format((int) $size), number_format($expectedSize)));
+            throw new VerificationException(sprintf('The package is %s bytes but Eduthon published %s bytes. The download was incomplete or altered.', number_format((int) $size), number_format($expectedSize)));
         }
 
         $digest = hash_file('sha256', $file);
 
         if (! preg_match('/^[a-f0-9]{64}$/', strtolower($expectedSha256)) || ! hash_equals(strtolower($expectedSha256), $digest)) {
-            throw new VerificationException('The package checksum does not match the one Delwathon published. The file may have been corrupted or tampered with.');
+            throw new VerificationException('The package checksum does not match the one Eduthon published. The file may have been corrupted or tampered with.');
         }
 
         $decoded = base64_decode($signature, true);
@@ -66,7 +66,7 @@ final class SignatureVerifier
             }
         }
 
-        throw new VerificationException('The package signature does not match any key this installer trusts. The package was not produced by Delwathon and has been rejected.');
+        throw new VerificationException('The package signature does not match any key this installer trusts. The package was not produced by Eduthon and has been rejected.');
     }
 
     /**

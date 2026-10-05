@@ -1,5 +1,5 @@
 <h1 class="text-[26px] font-bold tracking-tight"><?= e($title) ?></h1>
-<p class="mt-2 text-[15px] text-ink-muted">Use the purchase code and secret key from your Delwathon welcome email. The secret key is sent straight to Delwathon over an encrypted connection and is never saved on this server.</p>
+<p class="mt-2 text-[15px] text-ink-muted">Use the purchase code and secret key from your Eduthon welcome email. The secret key is sent straight to Eduthon over an encrypted connection and is never saved on this server.</p>
 
 <form method="post" action="<?= e($url('page=license')) ?>" class="mt-8 space-y-5" data-submit-once>
     <input type="hidden" name="_token" value="<?= e($csrf) ?>">
@@ -18,11 +18,11 @@
     </div>
 
     <div class="rounded-xl border border-line bg-surface-muted px-4 py-3 text-[13px] text-ink-muted">
-        This license will be activated for <span class="font-mono font-medium text-ink"><?= e(rtrim($bindUrl, '/')) ?></span>. Each license works on one website; contact Delwathon if you need to move it.
+        This license will be activated for <span class="font-mono font-medium text-ink"><?= e(rtrim($bindUrl, '/')) ?></span>. Each license works on one website; contact Eduthon if you need to move it.
     </div>
 
     <div class="flex items-center gap-3 pt-2">
-        <button type="submit" class="btn-primary"><span data-idle>Verify license</span><span data-busy hidden>Checking with Delwathon…</span></button>
+        <button type="submit" class="btn-primary"><span data-idle>Verify license</span><span data-busy hidden>Checking with Eduthon…</span></button>
         <a href="<?= e($url($mode === 'update' ? 'page=manage' : 'page=requirements')) ?>" class="btn-ghost">Back</a>
     </div>
 </form>

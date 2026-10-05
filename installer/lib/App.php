@@ -208,7 +208,7 @@ final class App
         }
 
         if ($release === null) {
-            return $this->redirect('page=review', ['error' => 'Delwathon has not published a portal release yet.']);
+            return $this->redirect('page=review', ['error' => 'Eduthon has not published a portal release yet.']);
         }
 
         Run::current($this->app->store)?->discard();

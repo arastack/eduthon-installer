@@ -60,7 +60,7 @@ $position = $step === null ? -1 : (int) array_search($step, $keys, true);
                     <svg viewBox="0 0 20 20" fill="currentColor" class="size-4 text-emerald-300" aria-hidden="true"><path fill-rule="evenodd" d="M10 1.9a1 1 0 0 1 .6.2l6 4a1 1 0 0 1 .4.8V10c0 4.1-2.8 7-6.7 8.1a1 1 0 0 1-.6 0C5.8 17 3 14.1 3 10V6.9a1 1 0 0 1 .4-.8l6-4a1 1 0 0 1 .6-.2Zm3.2 6.3a.8.8 0 0 0-1.2-1l-3 3.4-1.1-1.1a.8.8 0 1 0-1.1 1.1l1.7 1.7a.8.8 0 0 0 1.2 0l3.5-4Z" clip-rule="evenodd"/></svg>
                     Signed &amp; verified
                 </p>
-                <p class="mt-1.5">Every package is checked against Delwathon's signature before anything is unpacked on your server.</p>
+                <p class="mt-1.5">Every package is checked against Eduthon's signature before anything is unpacked on your server.</p>
             </div>
         </aside>
 
@@ -77,7 +77,7 @@ $position = $step === null ? -1 : (int) array_search($step, $keys, true);
             </div>
 
             <footer class="mt-12 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-5 text-[12.5px] text-ink-subtle">
-                <span>Eduthon Installer v<?= e($installerVersion) ?> · by Delwathon IT Solutions</span>
+                <span>Eduthon Installer v<?= e($installerVersion) ?> · by Eduthon</span>
                 <span>Connected to <?= e($engineHost) ?></span>
             </footer>
         </main>

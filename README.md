@@ -1,6 +1,6 @@
 # Eduthon Installer
 
-Deploys the Eduthon school portal onto a school's own web server, the **self-hosted** option. Schools hosted by Delwathon don't need it.
+Deploys the Eduthon school portal onto a school's own web server, the **self-hosted** option. Schools hosted by Eduthon don't need it.
 
 The school uploads the `installer/` folder into its website's root and opens `https://their-school.com/installer/`. The installer then:
 
@@ -86,19 +86,19 @@ The installer writes `eduthon.config.json` in the web root:
   "school": "Heritage College",
   "tenant": "01jk8z3v5t6m9q2w4e7r1y0u3p",
   "tenant_header": "X-Eduthon-Tenant",
-  "api_url": "https://eduthonapi.delwathon.com/api/",
-  "backend_url": "https://eduthonapi.delwathon.com/",
+  "api_url": "https://api.eduthon.ng/api/",
+  "backend_url": "https://api.eduthon.ng/",
   "portal_url": "https://portal.heritage.sch.ng/",
-  "engine_url": "https://eduthon-console.delwathon.com/api/",
+  "engine_url": "https://console.eduthon.ng/api/",
   "installed_at": "2026-09-23T08:32:22+00:00"
 }
 ```
 
-The backend is multi-tenant and is never installed on the school's server (see Eduthon Console's `docs/multi-tenancy.md`). At start-up the Eduthon frontend must load `/eduthon.config.json`, then send `tenant_header: tenant` on every request to `api_url`. A portal is never connected without a tenant ID. If the file is missing, as on Delwathon-hosted portals, it falls back to `GET {engine}/directory?host=…`. The frontend does this in `src/tenant.js`.
+The backend is multi-tenant and is never installed on the school's server (see Eduthon Console's `docs/multi-tenancy.md`). At start-up the Eduthon frontend must load `/eduthon.config.json`, then send `tenant_header: tenant` on every request to `api_url`. A portal is never connected without a tenant ID. If the file is missing, as on Eduthon-hosted portals, it falls back to `GET {engine}/directory?host=…`. The frontend does this in `src/tenant.js`.
 
 ## What changed from the previous installer
 
-The previous installer was a fork of the open-source rachidlaasri/LaravelInstaller package. It ran inside the Eduthon **backend** and configured the backend's `.env`, database, Passport keys and owner account. Under the current architecture Delwathon hosts every backend, so none of that belongs on a school's server. It also:
+The previous installer was a fork of the open-source rachidlaasri/LaravelInstaller package. It ran inside the Eduthon **backend** and configured the backend's `.env`, database, Passport keys and owner account. Under the current architecture Eduthon hosts every backend, so none of that belongs on a school's server. It also:
 
 - stored the license secret key and the owner's password in plain cookies;
 - offered a raw `.env` editor before installation finished;

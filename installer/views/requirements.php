@@ -4,7 +4,7 @@
 <?php if (! $hasKeys): ?>
     <div class="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-800 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200">
         <p class="font-semibold">This copy of the installer cannot verify packages</p>
-        <p class="mt-0.5">It was built without Delwathon's signing key. Download a fresh installer from Delwathon before continuing.</p>
+        <p class="mt-0.5">It was built without Eduthon's signing key. Download a fresh installer from Eduthon before continuing.</p>
     </div>
 <?php endif ?>
 

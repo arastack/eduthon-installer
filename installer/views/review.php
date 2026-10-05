@@ -13,7 +13,7 @@ $upToDate = $mode === 'update' && $release !== null && ! $release['update_availa
         <dd class="sm:col-span-2">
             <?php if ($backendReady): ?>
                 <span class="font-mono text-[13px] break-all"><?= e($config['backend']['url']) ?></span>
-                <span class="block text-[12.5px] text-ink-subtle">Hosted by Delwathon · tenant <span class="font-mono"><?= e($config['backend']['tenant'] ?? '') ?></span></span>
+                <span class="block text-[12.5px] text-ink-subtle">Hosted by Eduthon · tenant <span class="font-mono"><?= e($config['backend']['tenant'] ?? '') ?></span></span>
             <?php else: ?>
                 <span class="font-medium text-red-700 dark:text-red-300">Not assigned yet</span>
             <?php endif ?>
@@ -39,7 +39,7 @@ $upToDate = $mode === 'update' && $release !== null && ! $release['update_availa
 <?php if (! $backendReady): ?>
     <div class="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[14px] text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
         <p class="font-semibold">Your school's backend is still being prepared</p>
-        <p class="mt-0.5">Delwathon sets this up after your license is issued. Contact <?= e($config['support']['email'] ?? 'Delwathon support') ?><?= ! empty($config['support']['phone']) ? ' or '.e($config['support']['phone']) : '' ?> and run the installer again once it is ready.</p>
+        <p class="mt-0.5">Eduthon sets this up after your license is issued. Contact <?= e($config['support']['email'] ?? 'Eduthon support') ?><?= ! empty($config['support']['phone']) ? ' or '.e($config['support']['phone']) : '' ?> and run the installer again once it is ready.</p>
     </div>
 <?php elseif ($existing !== []): ?>
     <div class="mt-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[14px] text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">

@@ -1,12 +1,12 @@
 {
-    "name": "delwathon/eduthon-installer",
+    "name": "eduthon/eduthon-installer",
     "description": "Deploys the signed Eduthon school portal onto a school's own web server.",
     "type": "project",
     "license": "proprietary",
     "authors": [
         {
-            "name": "Delwathon IT Solutions",
-            "email": "dev@delwathon.com"
+            "name": "Eduthon",
+            "email": "dev@eduthon.ng"
         }
     ],
     "require": {

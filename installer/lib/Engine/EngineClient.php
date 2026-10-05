@@ -15,7 +15,7 @@ final class EngineClient
         private int $timeout = 30,
     ) {
         if (! str_starts_with($this->baseUrl, 'https://') && ! str_starts_with($this->baseUrl, 'http://localhost') && ! str_starts_with($this->baseUrl, 'http://127.0.0.1')) {
-            throw new EngineException('The installer is configured with an insecure Delwathon address. It must use HTTPS.');
+            throw new EngineException('The installer is configured with an insecure Eduthon address. It must use HTTPS.');
         }
     }
 
@@ -40,7 +40,7 @@ final class EngineClient
         $data = $this->call('POST', 'authenticate', ['secret_key' => $secretKey], authenticated: false);
 
         if (! is_string($data['token'] ?? null)) {
-            throw new EngineException('Delwathon did not return an access token. Please try again.');
+            throw new EngineException('Eduthon did not return an access token. Please try again.');
         }
 
         return ['token' => $data['token'], 'expires_at' => $data['expires_at'] ?? null, 'user' => (array) ($data['user'] ?? [])];
@@ -130,7 +130,7 @@ final class EngineClient
 
         if ($authenticated) {
             if ($this->token === null) {
-                throw new EngineException('Your session with Delwathon has expired. Enter your license details again.', 401);
+                throw new EngineException('Your session with Eduthon has expired. Enter your license details again.', 401);
             }
 
             $headers['Authorization'] = 'Bearer '.$this->token;
@@ -140,7 +140,7 @@ final class EngineClient
             $response = $this->transport->send($method, $this->baseUrl.$path, $headers, $payload === null ? null : json_encode($payload), timeout: $this->timeout);
         } catch (TransportException $exception) {
             throw new EngineException(
-                "This server could not reach Delwathon at {$this->host()}. Check that it can make outbound HTTPS connections, then try again.",
+                "This server could not reach Eduthon at {$this->host()}. Check that it can make outbound HTTPS connections, then try again.",
                 0,
                 $exception->getMessage(),
             );
@@ -155,13 +155,13 @@ final class EngineClient
         $message = is_string($data['message'] ?? null) ? $data['message'] : null;
 
         throw new EngineException(match (true) {
-            $response->status === 401 && $path === 'authenticate' => 'That secret key was not recognised. Check it against the email from Delwathon.',
-            $response->status === 401 => $message ?? 'Delwathon could not confirm these license details.',
+            $response->status === 401 && $path === 'authenticate' => 'That secret key was not recognised. Check it against the email from Eduthon.',
+            $response->status === 401 => $message ?? 'Eduthon could not confirm these license details.',
             $response->status === 403 => $message ?? 'This license is not allowed to do that.',
-            $response->status === 422 => $message ?? 'Delwathon rejected the request. Check the details you entered.',
+            $response->status === 422 => $message ?? 'Eduthon rejected the request. Check the details you entered.',
             $response->status === 429 => 'Too many attempts. Wait a minute and try again.',
-            $response->status >= 500 => 'Delwathon is having trouble right now. Please try again in a few minutes.',
-            default => $message ?? "Unexpected response from Delwathon (HTTP {$response->status}).",
+            $response->status >= 500 => 'Eduthon is having trouble right now. Please try again in a few minutes.',
+            default => $message ?? "Unexpected response from Eduthon (HTTP {$response->status}).",
         }, $response->status, $response->body === '' ? null : mb_substr($response->body, 0, 500));
     }
 }

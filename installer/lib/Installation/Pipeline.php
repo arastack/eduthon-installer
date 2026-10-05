@@ -20,7 +20,7 @@ use Eduthon\Installer\Support\Paths;
 use Throwable;
 
 /**
- * The ordered steps that take a signed release from Delwathon to a live
+ * The ordered steps that take a signed release from Eduthon to a live
  * portal. Each step runs in its own request so shared-hosting time limits
  * are never hit, and the browser can show progress as it goes.
  */
@@ -31,12 +31,12 @@ final class Pipeline
      */
     public const TASKS = [
         'download' => 'Download the portal package',
-        'verify' => 'Verify the Delwathon signature',
+        'verify' => 'Verify the Eduthon signature',
         'inspect' => 'Check and unpack the package',
         'deploy' => 'Deploy to your website',
         'configure' => 'Connect the portal to your school',
         'check' => 'Test the installation',
-        'report' => 'Register the installation with Delwathon',
+        'report' => 'Register the installation with Eduthon',
     ];
 
     public const LAST_TASK = 'report';
@@ -212,13 +212,13 @@ final class Pipeline
         $apiUrl = $run->config('backend.api_url');
 
         if (! is_string($apiUrl) || $apiUrl === '') {
-            throw new DeployException('Delwathon has not assigned a backend to this school yet, so the portal cannot be connected.');
+            throw new DeployException('Eduthon has not assigned a backend to this school yet, so the portal cannot be connected.');
         }
 
         $tenant = $run->config('backend.tenant');
 
         if (! is_string($tenant) || $tenant === '') {
-            throw new DeployException('Delwathon did not provide a tenant ID for this school, so the portal cannot be connected.');
+            throw new DeployException('Eduthon did not provide a tenant ID for this school, so the portal cannot be connected.');
         }
 
         $this->runtime->writeConfig([
@@ -296,10 +296,10 @@ final class Pipeline
                 $engine->installStatus((string) $run->get('purchase_code'), 'completed');
             }
         } catch (EngineException $exception) {
-            return ['status' => 'warning', 'message' => 'Installed, but Delwathon could not be notified: '.$exception->getMessage()];
+            return ['status' => 'warning', 'message' => 'Installed, but Eduthon could not be notified: '.$exception->getMessage()];
         }
 
-        return ['status' => 'done', 'message' => 'Delwathon has recorded version '.$run->release('version').' for your school.'];
+        return ['status' => 'done', 'message' => 'Eduthon has recorded version '.$run->release('version').' for your school.'];
     }
 
     private function fail(Run $run, string $task, Throwable $exception, EngineClient $engine): TaskFailed
@@ -316,7 +316,7 @@ final class Pipeline
 
         if (in_array($task, self::CHANGES_SITE, true) && $run->get('deployed')) {
             $rolledBack = $this->rollback($run);
-            $message .= $rolledBack ? ' Your site has been restored to how it was before.' : ' The automatic restore also failed; contact Delwathon support.';
+            $message .= $rolledBack ? ' Your site has been restored to how it was before.' : ' The automatic restore also failed; contact Eduthon support.';
         }
 
         $run->mark($task, 'failed', $message);

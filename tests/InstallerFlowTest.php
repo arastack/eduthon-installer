@@ -13,7 +13,7 @@ use Tests\Support\FakeTransport;
 use Tests\Support\TestSession;
 
 /**
- * Drives the installer exactly as a browser would, against a fake Delwathon.
+ * Drives the installer exactly as a browser would, against a fake Eduthon.
  */
 final class InstallerFlowTest extends TestCase
 {
@@ -39,7 +39,7 @@ final class InstallerFlowTest extends TestCase
         $this->copyInstaller(dirname(__DIR__).'/installer', $this->installerDir);
 
         file_put_contents($this->installerDir.'/config.local.php', '<?php return '.var_export([
-            'engine_url' => 'https://eduthon-console.delwathon.com/api/',
+            'engine_url' => 'https://console.eduthon.ng/api/',
             'trusted_keys' => [$this->keys['public']],
         ], true).';');
 
@@ -58,7 +58,7 @@ final class InstallerFlowTest extends TestCase
 
         $review = $this->get('page=review');
         $this->assertStringContainsString('Heritage College', $review->body);
-        $this->assertStringContainsString('https://api.delwathon.com/', $review->body);
+        $this->assertStringContainsString('https://api.eduthon.ng/', $review->body);
         $this->assertStringContainsString('01jk8z3v5t6m9q2w4e7r1y0u3p', $review->body);
         $this->assertStringContainsString('This website already has content', $review->body);
 
@@ -73,7 +73,7 @@ final class InstallerFlowTest extends TestCase
         $this->assertFileExists($this->webRoot.'/assets/app-2.5.0.js');
 
         $config = json_decode(file_get_contents($this->webRoot.'/eduthon.config.json'), true);
-        $this->assertSame('https://api.delwathon.com/api/', $config['api_url']);
+        $this->assertSame('https://api.eduthon.ng/api/', $config['api_url']);
         $this->assertSame('01jk8z3v5t6m9q2w4e7r1y0u3p', $config['tenant']);
         $this->assertSame('X-Eduthon-Tenant', $config['tenant_header']);
         $this->assertSame('01jk8z3v5t6m9q2w4e7r1y0u3p', $this->engine->sent('api/verify-install')['headers']['X-Eduthon-Tenant'], 'The health check identifies the tenant.');
@@ -108,7 +108,7 @@ final class InstallerFlowTest extends TestCase
         $this->assertStringContainsString('Nothing was installed', $result['message']);
         $this->assertFileDoesNotExist($this->webRoot.'/index.html');
         $this->assertSame([], glob($this->installerDir.'/storage/downloads/*.zip'), 'The rejected package is deleted.');
-        $this->assertSame('failed', $this->engine->sent('installation/report')['body']['status'], 'Delwathon is told about the failure.');
+        $this->assertSame('failed', $this->engine->sent('installation/report')['body']['status'], 'Eduthon is told about the failure.');
 
         $this->assertSame('failed', $this->task('inspect')['status'], 'Later steps refuse to run.');
     }
@@ -206,7 +206,7 @@ final class InstallerFlowTest extends TestCase
     }
 
     #[Test]
-    public function installation_is_blocked_until_delwathon_has_prepared_the_backend(): void
+    public function installation_is_blocked_until_eduthon_has_prepared_the_backend(): void
     {
         $this->engine->on('GET', 'installer/config', $this->installerConfig(backendReady: false));
         $this->post('page=license', ['purchase_code' => 'EDU-7KQ2-M9XD-P4TR-W3HZ', 'secret_key' => 'dsk_secret']);
@@ -325,7 +325,7 @@ final class InstallerFlowTest extends TestCase
                 'release' => [
                     'version' => $version, 'channel' => 'stable', 'notes' => 'Faster report cards.', 'size' => filesize($package),
                     'sha256' => hash_file('sha256', $package), 'signature' => $signature, 'signature_algorithm' => 'ed25519',
-                    'download_url' => 'https://eduthon-console.delwathon.com/api/releases/1/download?license=1&signature=abc',
+                    'download_url' => 'https://console.eduthon.ng/api/releases/1/download?license=1&signature=abc',
                 ],
             ])
             ->file('releases/1/download', file_get_contents($package))
@@ -344,12 +344,12 @@ final class InstallerFlowTest extends TestCase
             'config_version' => 1,
             'license' => ['purchase_code' => 'EDU-7KQ2-M9XD-P4TR-W3HZ', 'status' => 'active'],
             'school' => ['name' => 'Heritage College', 'hosting' => 'self_hosted'],
-            'servers' => ['backend_parent_url' => 'https://api.delwathon.com', 'frontend_parent_url' => 'https://eduthon.ng', 'engine_url' => 'https://eduthon-console.delwathon.com/api/'],
+            'servers' => ['backend_parent_url' => 'https://api.eduthon.ng', 'frontend_parent_url' => 'https://eduthon.ng', 'engine_url' => 'https://console.eduthon.ng/api/'],
             'backend' => $backendReady
-                ? ['ready' => true, 'tenant' => '01jk8z3v5t6m9q2w4e7r1y0u3p', 'tenant_header' => 'X-Eduthon-Tenant', 'url' => 'https://api.delwathon.com/', 'api_url' => 'https://api.delwathon.com/api/', 'health_url' => 'https://api.delwathon.com/api/verify-install']
+                ? ['ready' => true, 'tenant' => '01jk8z3v5t6m9q2w4e7r1y0u3p', 'tenant_header' => 'X-Eduthon-Tenant', 'url' => 'https://api.eduthon.ng/', 'api_url' => 'https://api.eduthon.ng/api/', 'health_url' => 'https://api.eduthon.ng/api/verify-install']
                 : ['ready' => false, 'tenant' => null, 'url' => null, 'api_url' => null, 'health_url' => null],
             'releases' => ['channel' => 'stable', 'frontend' => '2.5.0'],
-            'support' => ['company' => 'Delwathon IT Solutions', 'email' => 'support@delwathon.com'],
+            'support' => ['company' => 'Eduthon', 'email' => 'support@eduthon.ng'],
         ];
     }
 

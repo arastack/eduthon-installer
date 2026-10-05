@@ -60,7 +60,7 @@ final class Container
 
         $version = (string) require $installerDir.'/version.php';
 
-        return new self(Config::load($installerDir), $installerDir, $transport ?? new CurlTransport('EduthonInstaller/'.$version.' (+https://delwathon.com)'));
+        return new self(Config::load($installerDir), $installerDir, $transport ?? new CurlTransport('EduthonInstaller/'.$version.' (+https://eduthon.ng)'));
     }
 
     public function engine(?string $token = null): EngineClient

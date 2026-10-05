@@ -59,7 +59,7 @@ final class HealthCheck
     public function backend(?string $healthUrl, array $tenantHeaders = []): array
     {
         if ($healthUrl === null) {
-            return ['ok' => false, 'message' => 'Delwathon has not assigned a backend to this school yet.'];
+            return ['ok' => false, 'message' => 'Eduthon has not assigned a backend to this school yet.'];
         }
 
         try {

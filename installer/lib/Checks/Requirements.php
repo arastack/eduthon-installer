@@ -23,7 +23,7 @@ final class Requirements
             $this->item('PHP 8.1 or newer', PHP_VERSION_ID >= 80100, true, PHP_VERSION, 'Ask your hosting provider to switch this site to PHP 8.1 or newer.'),
         ];
 
-        foreach (['curl' => 'Connects securely to Delwathon.', 'openssl' => 'Encrypted connections.', 'sodium' => 'Verifies package signatures.', 'zip' => 'Opens the portal package.', 'json' => 'Reads configuration.'] as $extension => $purpose) {
+        foreach (['curl' => 'Connects securely to Eduthon.', 'openssl' => 'Encrypted connections.', 'sodium' => 'Verifies package signatures.', 'zip' => 'Opens the portal package.', 'json' => 'Reads configuration.'] as $extension => $purpose) {
             $loaded = extension_loaded($extension);
             $checks[] = $this->item("PHP {$extension} extension", $loaded, true, $loaded ? 'Enabled' : 'Missing', "{$purpose} Enable “{$extension}” in your hosting control panel (Select PHP Version → Extensions).");
         }

@@ -4,7 +4,7 @@
 /**
  * Builds the distributable installer: dist/eduthon-installer-{version}.zip
  *
- *   EDUTHON_RELEASE_PUBLIC_KEYS=<base64>[,<base64>] php bin/build [--engine=https://eduthon-console.delwathon.com/api/]
+ *   EDUTHON_RELEASE_PUBLIC_KEYS=<base64>[,<base64>] php bin/build [--engine=https://console.eduthon.ng/api/]
  *
  * The public keys are the Ed25519 keys Eduthon Console signs releases with
  * (Releases → Signing key). Builds without a valid key are refused.
