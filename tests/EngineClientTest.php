@@ -81,4 +81,33 @@ final class EngineClientTest extends TestCase
 
         (new EngineClient(new FakeTransport, 'https://console.eduthon.ng/api/'))->download('http://mirror.example.com/p.zip', '/tmp/x', 1024, 60);
     }
+
+    #[Test]
+    public function an_older_eduthon_gets_the_original_install_status_call(): void
+    {
+        $transport = (new FakeTransport)
+            ->on('POST', 'installation/status', ['message' => 'Not Found'], 404)
+            ->on('POST', 'update_install_status', ['success' => 'Status updated successfully']);
+
+        (new EngineClient($transport, 'https://console.eduthon.ng/api/'))->withToken('tok_123')->installStatus('EDU-AAAA', 'completed');
+
+        $this->assertSame(['purchase_code' => 'EDU-AAAA', 'status' => 'completed'], $transport->sent('update_install_status')['body']);
+    }
+
+    #[Test]
+    public function other_install_status_failures_are_not_retried_without_signing_in(): void
+    {
+        $transport = (new FakeTransport)
+            ->on('POST', 'installation/status', ['message' => 'This license is not active.'], 403)
+            ->on('POST', 'update_install_status', ['success' => 'Status updated successfully']);
+
+        try {
+            (new EngineClient($transport, 'https://console.eduthon.ng/api/'))->withToken('tok_123')->installStatus('EDU-AAAA', 'completed');
+            $this->fail('Expected the failure to be reported.');
+        } catch (EngineException $exception) {
+            $this->assertSame(403, $exception->status);
+        }
+
+        $this->assertNull($transport->sent('update_install_status'));
+    }
 }

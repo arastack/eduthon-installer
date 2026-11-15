@@ -82,7 +82,10 @@ final class InstallerFlowTest extends TestCase
 
         $report = $this->engine->sent('installation/report')['body'];
         $this->assertSame(['frontend', '2.5.0', 'installed'], [$report['component'], $report['version'], $report['status']]);
-        $this->assertSame('completed', $this->engine->sent('update_install_status')['body']['status']);
+        $status = $this->engine->sent('installation/status');
+        $this->assertSame('completed', $status['body']['status']);
+        $this->assertStringStartsWith('Bearer ', $status['headers']['Authorization'] ?? '', 'Finishing is reported signed in as the license.');
+        $this->assertNull($this->engine->sent('update_install_status'));
 
         $done = $this->get('page=done');
         $this->assertStringContainsString('Your portal is live', $done->body);
@@ -192,6 +195,7 @@ final class InstallerFlowTest extends TestCase
         $this->assertFileDoesNotExist($this->webRoot.'/assets/app-2.5.0.js');
         $this->assertSame('2.6.0', json_decode(file_get_contents($this->webRoot.'/eduthon.config.json'), true)['version']);
         $this->assertNull($this->engine->sent('update_install_status'), 'Updates do not re-report the setup wizard.');
+        $this->assertNull($this->engine->sent('installation/status'), 'Updates do not re-report the setup wizard.');
     }
 
     #[Test]
@@ -330,6 +334,7 @@ final class InstallerFlowTest extends TestCase
             ])
             ->file('releases/1/download', file_get_contents($package))
             ->on('POST', 'installation/report', ['success' => 'Report received'])
+            ->on('POST', 'installation/status', ['success' => 'Status updated successfully'])
             ->on('POST', 'update_install_status', ['success' => 'Status updated successfully'])
             ->on('GET', 'heritage.sch.ng/eduthon.config.json', fn () => new TransportResponse(200, (string) file_get_contents($this->webRoot.'/eduthon.config.json')))
             ->on('GET', 'api/verify-install', ['status' => 'Installed']);

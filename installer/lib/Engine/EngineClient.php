@@ -111,9 +111,22 @@ final class EngineClient
         ]);
     }
 
+    /**
+     * Tell Eduthon how far the installation got, signed in as the license
+     * (only that can put the school live). An older Eduthon without the
+     * signed-in address gets the original call.
+     */
     public function installStatus(string $purchaseCode, string $status): void
     {
-        $this->call('POST', 'update_install_status', ['purchase_code' => $purchaseCode, 'status' => $status], authenticated: false);
+        try {
+            $this->call('POST', 'installation/status', ['status' => $status]);
+        } catch (EngineException $exception) {
+            if ($exception->status !== 404) {
+                throw $exception;
+            }
+
+            $this->call('POST', 'update_install_status', ['purchase_code' => $purchaseCode, 'status' => $status], authenticated: false);
+        }
     }
 
     /**
