@@ -285,10 +285,15 @@ final class App
             return $this->redirect('page=welcome');
         }
 
+        // Anyone can open this page, so the license details and the log are
+        // shown only once the secret key has been entered.
+        $signedIn = (bool) $this->session->get('token');
+
         return $this->view('manage', [
             'title' => 'Eduthon portal',
             'state' => $this->app->state->all(),
-            'log' => $this->app->log->tail(12),
+            'signedIn' => $signedIn,
+            'log' => $signedIn ? $this->app->log->tail(12) : [],
         ]);
     }
 
